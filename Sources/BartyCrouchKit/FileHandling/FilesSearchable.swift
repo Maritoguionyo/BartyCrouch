@@ -14,10 +14,11 @@ extension FilesSearchable {
         guard let enumerator = FileManager.default.enumerator(at: baseDirectoryURL, includingPropertiesForKeys: nil) else { return [] }
 
         var filePaths = [String]()
+        let dirsToIgnore = Set([".git", "carthage", "pods", "build", ".build", "docs"])
         let baseDirectoryAbsolutePath = baseDirectoryURL.path
 
         for case let url as URL in enumerator {
-            if CodeFilesSearch.shouldSkipFile(at: url) {
+            if dirsToIgnore.contains(url.lastPathComponent.lowercased()) {
                 enumerator.skipDescendants()
                 continue
             }

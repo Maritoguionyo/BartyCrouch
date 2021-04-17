@@ -222,7 +222,7 @@ public class StringsFileUpdater {
     ///   - clientSecret:                   The Microsoft Translator API Client Secret.
     ///   - override:                       Specified if values should be overridden.
     /// - Returns: The number of values translated successfully.
-    public func translateEmptyValues(usingValuesFromStringsFile sourceStringsFilePath: String, clientSecret: Secret, override: Bool = false) throws -> Int {
+    public func translateEmptyValues(usingValuesFromStringsFile sourceStringsFilePath: String, clientSecret: String, override: Bool = false) throws -> Int {
         guard let (sourceLanguage, sourceRegion) = extractLocale(fromPath: sourceStringsFilePath) else {
             throw MungoFatalError(
                 source: .invalidUserInput,
@@ -244,8 +244,7 @@ public class StringsFileUpdater {
 
         guard let targetTranslatorLanguage = Language.with(languageCode: targetLanguage, region: targetRegion) else {
             let locale = targetRegion != nil ? "\(targetLanguage)-\(targetRegion!)" : targetLanguage
-            print("Automatic translation to the locale '\(locale)' is not supported by Microsoft Translator.", level: .warning)
-            return 0
+            throw MungoFatalError(source: .invalidUserInput, message: "Automatic translation to the locale '\(locale)' is not supported.")
         }
 
         do {
@@ -256,14 +255,7 @@ public class StringsFileUpdater {
             let existingTargetTranslations = findTranslations(inString: oldContentString)
             var updatedTargetTranslations: [TranslationEntry] = []
 
-            let translator: BartyCrouchTranslator
-            switch clientSecret {
-            case let .microsoftTranslator(secret):
-                translator = .init(translationService: .microsoft(subscriptionKey: secret))
-
-            case let .deepL(secret):
-                translator = .init(translationService: .deepL(apiKey: secret))
-            }
+            let translator = BartyCrouchTranslator(translationService: .microsoft(subscriptionKey: clientSecret))
 
             for sourceTranslation in sourceTranslations {
                 let (sourceKey, sourceValue, sourceComment, sourceLine) = sourceTranslation

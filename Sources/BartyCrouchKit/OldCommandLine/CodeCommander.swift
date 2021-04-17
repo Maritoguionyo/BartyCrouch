@@ -56,8 +56,7 @@ public final class CodeCommander {
         var matchedFiles = [String]()
 
         while let anURL = enumerator.nextObject() as? URL {
-            if CodeCommanderConstants.sourceCodeExtensions.contains(anURL.pathExtension) &&
-                !CodeFilesSearch.shouldSkipFile(at: anURL) {
+            if CodeCommanderConstants.sourceCodeExtensions.contains(anURL.pathExtension) {
                 matchedFiles.append(anURL.path)
             }
         }

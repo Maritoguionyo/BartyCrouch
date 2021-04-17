@@ -31,38 +31,6 @@ If needed, pluralize to `Tasks`, `PRs` or `Authors` and list multiple entries se
 ### Security
 - None.
 
-## [4.5.0] - 2021-02-21
-### Added
-- Add support for DeepL API as an alternative for Microsoft Translator API.  
-  PR: [#220](https://github.com/Flinesoft/BartyCrouch/pull/220) | Author: [noppe](https://github.com/noppefoxwolf)
-
-## [4.4.1] - 2021-01-16
-### Fixed
-- Fixed an issue with unmatching country code casing for Portuguese and Canadian French.  
-  Author: [Cihat Gündüz](https://github.com/Jeehut)
-
-## [4.4.0] - 2021-01-16
-### Changed
-- Updated languages supported by Microsoft Translator – 17 more languages available now!  
-  Issue: [#216](https://github.com/Flinesoft/BartyCrouch/issues/216) | PR: [#219](https://github.com/Flinesoft/BartyCrouch/pull/219) | Author: [Jamie Gough](https://github.com/jamiegough)
-- BartyCrouch doesn't fail anymore when there's a language not supported by Microsoft Translator (yet) – it prints a warning instead.  
-  Issue: [#215](https://github.com/Flinesoft/BartyCrouch/issues/215) | PR: [#219](https://github.com/Flinesoft/BartyCrouch/pull/219) | Author: [Jamie Gough](https://github.com/jamiegough)
-
-## [4.3.2] - 2020-12-24
-### Fixed
-- Fixed an issue where BartyCrouch did not skip the directories ".git", "Carthage", "Pods", "build", ".build", "docs" anymore.  
-  Issues: [#213](https://github.com/Flinesoft/BartyCrouch/issues/213), [#2](https://github.com/Flinesoft/BartyCrouch/issues/177) | PR: [#214](https://github.com/Flinesoft/BartyCrouch/pull/214) | Author: [Bill Panagiotopoulos](https://github.com/billp)
-
-## [4.3.1] - 2020-10-06
-### Fixed
-- Fix missing usage of `harmonizeWithSource` parameter for `normalize` task.  
-  Issue: [#196](https://github.com/Flinesoft/BartyCrouch/issues/196) | PR: [#182](https://github.com/Flinesoft/BartyCrouch/pull/197) | Author: [Marco Pagliari](https://github.com/lechuckcaptain)
-
-## [4.3.0] - 2020-09-28
-### Changed
-- Updated swift-syntax to match Swift 5.3.  
-  Issues: [#199](https://github.com/Flinesoft/BartyCrouch/issues/199), [#201](https://github.com/Flinesoft/BartyCrouch/issues/201) | PR: [#204](https://github.com/Flinesoft/BartyCrouch/pull/204) | Author: [w8wjb](https://github.com/w8wjb)
-
 ## [4.2.0] - 2020-04-24
 ### Added
 - Added new `-p` / `--path` option to run BartyCrouch from a different path than current.  

@@ -28,7 +28,7 @@ public class CommandLineActor {
         customLocalizableName: String?,
         usePlistArguments: Bool
     ) {
-        let localizableFileName = customLocalizableName ?? "Localizable"
+        let localizableFileName = customLocalizableName ??  "Localizable"
         let allLocalizableStringsFilePaths = localizables.flatMap {
             StringsFilesSearch.shared.findAllStringsFiles(within: $0, withFileName: localizableFileName)
         }.withoutDuplicates()
@@ -76,7 +76,7 @@ public class CommandLineActor {
         }
     }
 
-    func actOnTranslate(paths: [String], override: Bool, verbose: Bool, secret: Secret, locale: String) {
+    func actOnTranslate(paths: [String], override: Bool, verbose: Bool, secret: String, locale: String) {
         let inputFilePaths = paths.flatMap { StringsFilesSearch.shared.findAllStringsFiles(within: $0, withLocale: locale) }.withoutDuplicates()
 
         guard !inputFilePaths.isEmpty else { print("No input files found.", level: .warning); return }
@@ -118,21 +118,20 @@ public class CommandLineActor {
                 }
             }
 
-            if harmonizeWithSource {
-                for filePath in targetStringsFilePaths {
-                    let stringsFileUpdater = StringsFileUpdater(path: filePath)
-                    do {
-                        try stringsFileUpdater?.harmonizeKeys(withSource: sourceFilePath)
-                    } catch {
-                        print("Could not harmonize keys with source file at path \(sourceFilePath).", level: .error)
-                        continue
-                    }
+            for filePath in targetStringsFilePaths {
+                let stringsFileUpdater = StringsFileUpdater(path: filePath)
+                do {
+                    try stringsFileUpdater?.harmonizeKeys(withSource: sourceFilePath)
+                } catch {
+                    print("Could not harmonize keys with source file at path \(sourceFilePath).", level: .error)
+                    continue
                 }
             }
 
-            if sortByKeys {
-                for filePath in allStringsFilePaths {
-                    let stringsFileUpdater = StringsFileUpdater(path: filePath)
+            for filePath in allStringsFilePaths {
+                let stringsFileUpdater = StringsFileUpdater(path: filePath)
+
+                if sortByKeys {
                     stringsFileUpdater?.sortByKeys()
                 }
             }
@@ -316,7 +315,7 @@ public class CommandLineActor {
         print("Successfully updated strings file(s) of Storyboard or XIB file.", level: .success, file: inputFilePath)
     }
 
-    private func translate(secret: Secret, _ inputFilePath: String, _ outputStringsFilePaths: [String], override: Bool, verbose: Bool) {
+    private func translate(secret: String, _ inputFilePath: String, _ outputStringsFilePaths: [String], override: Bool, verbose: Bool) {
         var overallTranslatedValuesCount = 0
         var filesWithTranslatedValuesCount = 0
 
